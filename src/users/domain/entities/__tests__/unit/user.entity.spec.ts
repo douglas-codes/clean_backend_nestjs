@@ -1,16 +1,22 @@
 import { UserEntity } from '../../user.entity'
-import type { UserInterface } from '../../user.interface'
+import type { UserProps } from '../../user.interface'
 import { fakerPT_BR as faker } from '@faker-js/faker'
 describe('UserEntity unit tests', () => {
-  it('Constructor method', () => {
-    const props: UserInterface = {
+  let props: UserProps
+  let sut: UserEntity
+
+  beforeEach(() => {
+    props = {
       name: faker.person.fullName(),
       email: faker.internet.email(),
       password: faker.internet.password(),
     }
-
-    const sut = new UserEntity(props)
-
+    sut = new UserEntity(props)
+  })
+  it('Constructor method', () => {
     expect(sut.props.name).toEqual(props.name)
+    expect(sut.props.email).toEqual(props.email)
+    expect(sut.props.password).toEqual(props.password)
+    expect(sut.props.createdAt).toBeInstanceOf(Date)
   })
 })
